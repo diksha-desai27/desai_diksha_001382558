@@ -23,6 +23,8 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         adminUser = new Admin();
+        setBounds(50,10,600,400);
+        setResizable(false);
     }
 
     /**
