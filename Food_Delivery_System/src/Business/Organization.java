@@ -4,6 +4,8 @@
  */
 package Business;
 
+import Business.Customer.CustomerDirectory;
+import Business.Employee.Employee;
 import Business.Employee.EmployeeDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
@@ -19,6 +21,7 @@ public abstract class Organization {
     private String name;
     private WorkQueue workQueue;
     private EmployeeDirectory employeeDirectory;
+    private CustomerDirectory customerDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter=0;
@@ -37,18 +40,21 @@ public abstract class Organization {
             return value;
         }
     }
-
+    
+    public Organization(){
+        
+    }
+    
     public Organization(String name) {
         this.name = name;
         workQueue = new WorkQueue();
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
+        customerDirectory = new CustomerDirectory();
         organizationID = counter;
         ++counter;
     }
-    public Organization(){
-        
-    }
+    
     public abstract ArrayList<Role> getSupportedRole();
     
     public UserAccountDirectory getUserAccountDirectory() {
@@ -58,13 +64,17 @@ public abstract class Organization {
     public int getOrganizationID() {
         return organizationID;
     }
-
+    
+    
     public EmployeeDirectory getEmployeeDirectory() {
+        if(employeeDirectory == null) {
+            employeeDirectory = new EmployeeDirectory();
+        }
         return employeeDirectory;
     }
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public WorkQueue getWorkQueue() {
@@ -81,7 +91,7 @@ public abstract class Organization {
 
     @Override
     public String toString() {
-        return name;
+        return this.getName();
     }
     
     
