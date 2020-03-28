@@ -105,7 +105,7 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
         });
 
         enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        enterpriseLabel.setText("EnterPrise :");
+        enterpriseLabel.setText("Customer:");
 
         valueLabel.setText("<value>");
 
