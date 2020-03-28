@@ -10,6 +10,8 @@ nbactions.xml
 nb-configuration.xml
 *.db4o
 .idea
+.idea/*
+
 # Class Files #
 *.class
 
