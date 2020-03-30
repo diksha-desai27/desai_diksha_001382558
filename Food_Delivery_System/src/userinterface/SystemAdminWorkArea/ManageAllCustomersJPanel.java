@@ -258,47 +258,72 @@ public class ManageAllCustomersJPanel extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-//        UserAccount u = null;
-//        int selectedRow = customerTable.getSelectedRow();
-//        if(selectedRow >= 0) {
-//            Customer c = (Customer) customerTable.getValueAt(selectedRow, 0);
-//            if(system.getCustomerDirectory().getCustomerList().contains(c))
-//            {
-//                for(UserAccount userAccount: system.getUserAccountDirectory().getUserAccountList())
-//                {
-//                    if(userAccount.getUsername().equals(c.getUsername()))
-//                    {
-//                        u = userAccount;
-//                    }
-//                }
-//
-//            }
-//            system.getCustomerDirectory().deleteCustomer(c);
-//            system.getUserAccountDirectory().deleteUserAccount(u);
-//            populateTable();
-//        }
-//        else
-//        {
-//            JOptionPane.showMessageDialog(null, "Please select a customer to delete.");
-//        }
+        UserAccount u = null;
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow >= 0) 
+        {
+            String c = (String) customerTable.getValueAt(selectedRow, 0);
+            System.out.println("Customer --->" + c);
+            System.out.println("Checking Customer dir --->" + system.getCustomerDirectory().getCustomerList());
+            //TODO
+
+            Iterator userCustIterator = system.getUserCust().entrySet().iterator();
+            while (userCustIterator.hasNext()) 
+            {
+                Map.Entry mapElement = (Map.Entry) userCustIterator.next();
+                Customer cust = ((Customer) mapElement.getValue());
+                UserAccount ua = ((UserAccount) mapElement.getKey());
+                if (ua.getUsername().equalsIgnoreCase(c)) 
+                {
+                     system.getCustomerDirectory().getCustomerList().remove(system.getUserCust().get(ua));
+                     system.getUserAccountDirectory().getUserAccountList().remove(ua);
+                    system.getUserCust().remove(ua);
+                    System.out.println(" system.getUserCust() removing --->" + system.getUserCust());
+                    System.out.println("Checking Customer dir after removing --->" + system.getCustomerDirectory().getCustomerList());
+                    break;
+
+                }
+
+            }
+
+        } 
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "Please select a customer to delete.");
+        }
+        populateTable();
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-//        int selectedRow = customerTable.getSelectedRow();
-//        if(selectedRow >= 0) {
-//            Customer c = (Customer) customerTable.getValueAt(selectedRow, 0);
-//            System.out.println(c.getUsername());
-//            UpdateInformationJPanel updateUserInfo = new UpdateInformationJPanel(userProcessContainer, this.system, "Customer", c.getUsername());
-//            userProcessContainer.add("updateUserInfo",updateUserInfo);
-//
-//           CardLayout layout=(CardLayout)userProcessContainer.getLayout();
-//           layout.next(userProcessContainer);
-//        }
-//        else
-//        {
-//            JOptionPane.showMessageDialog(null, "Please select a customer to update.");
-//        }
+        int selectedRow = customerTable.getSelectedRow();
+        if(selectedRow >= 0) {
+            String c = (String) customerTable.getValueAt(selectedRow, 0);
+            System.out.println(c);
+            Iterator userCustIterator = system.getUserCust().entrySet().iterator();
+            while (userCustIterator.hasNext()) 
+            {
+                Map.Entry mapElement = (Map.Entry) userCustIterator.next();
+                Customer cust = ((Customer) mapElement.getValue());
+                UserAccount ua = ((UserAccount) mapElement.getKey());
+                if (ua.getUsername().equalsIgnoreCase(c)) 
+                {
+           
+                    UpdateInformationJPanel updateUserInfo = new UpdateInformationJPanel(userProcessContainer, this.system, "Customer", ua.getUsername());
+                    userProcessContainer.add("updateUserInfo",updateUserInfo);
+
+                   CardLayout layout=(CardLayout)userProcessContainer.getLayout();
+                   layout.next(userProcessContainer);
+                    break;
+                }
+
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a customer to update.");
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 

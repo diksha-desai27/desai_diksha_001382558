@@ -13,7 +13,9 @@ import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -29,9 +31,9 @@ public class UpdateInformationJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     EcoSystem system;
     String user;
-   // List userList = new ArrayList();
+    // List userList = new ArrayList();
     String username;
-    
+
     public UpdateInformationJPanel(JPanel userProcessContainer, EcoSystem system, String user, String username) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -156,131 +158,108 @@ public class UpdateInformationJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_passwordTextFieldActionPerformed
 
     private void populateData() {
-        
+
         usernameTextField.setText(this.username);
-        if(this.user.equals("Customer"))
-        {
-//            for(Customer c: system.getCustomerDirectory().getCustomerList())
-//            {
-//                if(c.getUsername().equals(this.username))
-//                {
+        if (this.user.equals("Customer")) {
+            for (UserAccount ua : system.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getUsername().equals(this.username)) {
 //                    Customer cust = c;
 //                    nameTextField.setText(cust.getName());
-//                }
-//            }
-//            
-//            for(UserAccount ua: system.getUserAccountDirectory().getUserAccountList())
-//            {
-//                if(ua.getUsername().equals(this.username))
-//                {
-//                    UserAccount userAccount = ua;
-//                    passwordTextField.setText(userAccount.getPassword());
-//                }
-//            }
-        }
-        else if(this.user.equals("DeliveryMan"))
-        {
-           for(DeliveryMan d: system.getDeliveryManDirectory().getDeliverymanList())
-            {
-                if(d.getUsername().equals(this.username))
-                {
+                    Iterator userCustIterator = system.getUserCust().entrySet().iterator();
+                    while (userCustIterator.hasNext()) {
+                        Map.Entry mapElement = (Map.Entry) userCustIterator.next();
+                        Customer cust = ((Customer) mapElement.getValue());
+                        UserAccount ua1 = ((UserAccount) mapElement.getKey());
+                        nameTextField.setText(ua1.getCustomer().getName());
+                        passwordTextField.setText(ua1.getPassword());
+                    break;
+
+                    }
+                }
+            }
+
+        } else if (this.user.equals("DeliveryMan")) {
+            for (DeliveryMan d : system.getDeliveryManDirectory().getDeliverymanList()) {
+                if (d.getUsername().equals(this.username)) {
                     DeliveryMan dm = d;
                     nameTextField.setText(dm.getName());
                 }
             }
-            
-            for(UserAccount ua: system.getUserAccountDirectory().getUserAccountList())
-            {
-                if(ua.getUsername().equals(this.username))
-                {
+
+            for (UserAccount ua : system.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getUsername().equals(this.username)) {
                     UserAccount userAccount = ua;
                     passwordTextField.setText(userAccount.getPassword());
                 }
             }
-        }
-        else
-        {
+        } else {
             //
         }
 
     }
-    
+
     private void backJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backJButtonActionPerformed
         userProcessContainer.remove(this);
         Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        if(this.user.equals("DeliveryMan"))
-        {
+        if (this.user.equals("DeliveryMan")) {
             ManageDeliveryManJPanel manageDeliveryManJPanel = (ManageDeliveryManJPanel) component;
-            manageDeliveryManJPanel.populateTable(); 
+            manageDeliveryManJPanel.populateTable();
         }
-   
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
-       
+
     }//GEN-LAST:event_backJButtonActionPerformed
 
     private void submitJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitJButtonActionPerformed
-         String name = nameTextField.getText();
-         String password = String.valueOf(passwordTextField.getPassword());
-        if(this.user.equals("Customer"))
+        String name = nameTextField.getText();
+        String password = String.valueOf(passwordTextField.getPassword());
+        if (this.user.equals("Customer")) 
         {
-//           for(Customer c: system.getCustomerDirectory().getCustomerList())
-//            {
-//                if(c.getUsername().equals(this.username))
-//                {
+            for (UserAccount ua : system.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getUsername().equals(this.username)) {
 //                    Customer cust = c;
-//                    cust.setName(nameTextField.getText());
-//                }
-//            }
-//            
-//            for(UserAccount ua: system.getUserAccountDirectory().getUserAccountList())
-//            {
-//                if(ua.getUsername().equals(this.username))
-//                {
-//                    UserAccount userAccount = ua;
-//                    ua.setPassword(password);
-//                }
-//            }
-//            JOptionPane.showMessageDialog(null, "Customer updated succesfully");
-//            nameTextField.setText("");
-//            passwordTextField.setText("");
-//            usernameTextField.setText("");
-        }
-        else if(this.user.equals("DeliveryMan"))
-        {
+//                    nameTextField.setText(cust.getName());
+                    Iterator userCustIterator = system.getUserCust().entrySet().iterator();
+                    while (userCustIterator.hasNext()) 
+                    {
+                        Map.Entry mapElement = (Map.Entry) userCustIterator.next();
+                        Customer cust = ((Customer) mapElement.getValue());
+                        UserAccount ua1 = ((UserAccount) mapElement.getKey());
+                        system.getCustomerDirectory().getCustomerList().remove(system.getUserCust().get(ua));
+                        ua1.getCustomer().setName(nameTextField.getText());
+                        ua1.setPassword(String.valueOf(passwordTextField.getPassword()));
+                    break;
+
+                    }
+                }
+            }
+        } 
+            else if (this.user.equals("DeliveryMan")) {
             DeliveryMan d = null;
-            for(DeliveryMan dm: system.getDeliveryManDirectory().getDeliverymanList()) 
-            {
-                if(dm.getUsername().equals(this.username))
-                {
+            for (DeliveryMan dm : system.getDeliveryManDirectory().getDeliverymanList()) {
+                if (dm.getUsername().equals(this.username)) {
                     d = dm;
                     d.setName(name);
                     break;
                 }
             }
-            for(UserAccount ua: system.getUserAccountDirectory().getUserAccountList())
-            {
-                if(ua.getUsername().equals(this.username))
-                {
+            for (UserAccount ua : system.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getUsername().equals(this.username)) {
                     UserAccount userAccount = ua;
                     userAccount.setPassword(password);
                     break;
                 }
             }
             String name1 = d.getName();
-            for(Employee emp: system.getEmployeeDirectory().getEmployeeList())
-            {
-                if(name1.equals(emp.getName()))
-                {
-                            emp.setName(name);
+            for (Employee emp : system.getEmployeeDirectory().getEmployeeList()) {
+                if (name1.equals(emp.getName())) {
+                    emp.setName(name);
                 }
             }
             JOptionPane.showMessageDialog(null, "Delivery Man updated successfully");
-        }
-        else
-        {
+        } else {
             //
         }
         nameTextField.setText("");
