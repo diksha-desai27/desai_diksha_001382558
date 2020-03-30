@@ -276,6 +276,7 @@ public class ManageAllCustomersJPanel extends javax.swing.JPanel {
                 if (ua.getUsername().equalsIgnoreCase(c)) 
                 {
                      system.getCustomerDirectory().getCustomerList().remove(system.getUserCust().get(ua));
+                      system.getCustomerDirectory().getCustomerList().remove(system.getUserCust().get(ua));
                      system.getUserAccountDirectory().getUserAccountList().remove(ua);
                     system.getUserCust().remove(ua);
                     System.out.println(" system.getUserCust() removing --->" + system.getUserCust());

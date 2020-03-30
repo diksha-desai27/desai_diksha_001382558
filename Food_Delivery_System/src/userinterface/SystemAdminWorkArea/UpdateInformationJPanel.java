@@ -202,9 +202,19 @@ public class UpdateInformationJPanel extends javax.swing.JPanel {
         userProcessContainer.remove(this);
         Component[] componentArray = userProcessContainer.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        if (this.user.equals("DeliveryMan")) {
+        if (this.user.equals("DeliveryMan")) 
+        {
             ManageDeliveryManJPanel manageDeliveryManJPanel = (ManageDeliveryManJPanel) component;
             manageDeliveryManJPanel.populateTable();
+        }
+        else if(this.user.equals("Customer")) 
+        {
+            ManageAllCustomersJPanel manageCustomers = (ManageAllCustomersJPanel) component;
+            manageCustomers.populateTable();
+        }
+        else
+        {
+            //
         }
 
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
