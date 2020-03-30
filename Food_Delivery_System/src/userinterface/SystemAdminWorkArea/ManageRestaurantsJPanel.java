@@ -302,7 +302,7 @@ public class ManageRestaurantsJPanel extends javax.swing.JPanel {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select a customer to delete.");
+            JOptionPane.showMessageDialog(null, "Please select a restaurant to delete.");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 

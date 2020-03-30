@@ -4,13 +4,17 @@
  */
 package userinterface;
 
+import Business.Customer.Customer;
 import Business.EcoSystem;
 import Business.DB4OUtil.DB4OUtil;
+import Business.DeliveryMan.DeliveryMan;
 
 import Business.Organization;
 import Business.Restaurant.Restaurant;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -29,7 +33,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         system = dB4OUtil.retrieveSystem();
-        this.setSize(700, 600);
+        this.setSize(800, 800);
     }
 
     /**
@@ -130,6 +134,8 @@ public class MainJFrame extends javax.swing.JFrame {
         String password = String.valueOf(passwordCharArray);
         
         Restaurant restaurant = null;
+        Customer customer = null;
+        DeliveryMan dm = null;
         //Step1: Check in the system admin user account directory if you have the user
         UserAccount userAccount=system.getUserAccountDirectory().authenticateUser(userName, password);
         
@@ -137,13 +143,37 @@ public class MainJFrame extends javax.swing.JFrame {
         {
             for(Restaurant r: system.getRestaurantDirectory().getRestaurantList())
             {
-                System.out.println(r);
                 if(r.getRestaurantAdminUsername().equals(userName))
                 {
                     restaurant = r;
+                    break;
                 }
             }
+            if(restaurant == null)
+            {
+                Iterator userCustIterator = system.getUserCust().entrySet().iterator(); 
+                while (userCustIterator.hasNext()) 
+                { 
+                    Map.Entry mapElement = (Map.Entry)userCustIterator.next(); 
+                    customer = ((Customer)mapElement.getValue()); 
+                    break;
+//                    userAccount  =((UserAccount)mapElement.getKey()); 
+                } 
+               
+                    System.out.println("total delivery man -->"+system.getDeliveryManDirectory().getDeliverymanList().size());
+                    for(DeliveryMan d: system.getDeliveryManDirectory().getDeliverymanList())
+                    {
+                        if(d.getUsername().equals(userName))
+                        {
+                            dm = d;
+                            break;
+                        }
+                    }
+       
+                
+            }
         }
+        
         System.out.println("Restaurant" + restaurant);
         
         if(userAccount==null)
@@ -153,7 +183,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         else{
             CardLayout layout=(CardLayout)container.getLayout();
-            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, restaurant, system));
+            container.add("workArea",userAccount.getRole().createWorkArea(container, userAccount, restaurant, customer, dm, system.getRestaurantDirectory(),system));
             layout.next(container);
         }
         

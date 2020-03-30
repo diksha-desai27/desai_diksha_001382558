@@ -78,6 +78,10 @@ public abstract class Organization {
     }
 
     public WorkQueue getWorkQueue() {
+        if(workQueue == null)
+        {
+            workQueue = new WorkQueue();
+        }
         return workQueue;
     }
 

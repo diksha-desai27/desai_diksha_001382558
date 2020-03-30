@@ -208,6 +208,7 @@ public class ManageAllCustomersJPanel extends javax.swing.JPanel {
         {
             Customer customer = system.getCustomerDirectory().createCustomer(name);
             UserAccount ua = system.getUserAccountDirectory().createUserAccount(username, password, new CustomerRole());
+            ua.setCustomer(customer);
             system.getUserCust().put(ua,customer);
         }
         else

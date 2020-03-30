@@ -5,6 +5,7 @@
  */
 package Business.Restaurant;
 
+import Business.Order.Order;
 import Business.Organization;
 import Business.Role.Role;
 import com.db4o.collections.ArrayList4;
@@ -21,6 +22,8 @@ public class Restaurant extends Organization{
     String address;
     String restaurantAdminUsername;
     List<Menu> menu;
+    List<Order> restOrders;
+
     
     public Restaurant(String name, String restaurantAdminUsername, String address) {
         super(name);
@@ -65,7 +68,20 @@ public class Restaurant extends Organization{
     public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
-                 
+
+    public List<Order> getRestOrders() {
+        if(this.restOrders == null)
+        {
+            restOrders = new ArrayList();
+        }
+        return restOrders;
+    }
+
+    public void setRestOrders(List<Order> restOrders) {
+        this.restOrders = restOrders;
+    }
+       
+    
     @Override
     public String toString() {
         return this.getRestaurantAdminUsername();

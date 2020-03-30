@@ -5,20 +5,26 @@
  */
 package Business.Customer;
 
+import Business.Order.Order;
+import Business.Restaurant.Menu;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author harold
  */
 public class Customer {
     
-    String name;
-
-
+    private String name;
+    private List<Order> custOrders;
+    
     public Customer(String name) {
         this.name = name;
     }
     
- 
     public String getName() {
         return name;
     }
@@ -26,6 +32,19 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Order> getCustOrders() {
+        if(custOrders == null)
+        {
+            custOrders = new ArrayList();
+        }
+        return custOrders;
+    }
+
+    public void setCustOrders(List<Order> custOrders) {
+        this.custOrders = custOrders;
+    }
+    
 
     @Override
     public String toString() {
