@@ -15,14 +15,18 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
 
     JPanel userProcessContainer;
     Restaurant restaurant;
+    EcoSystem system;
+    UserAccount userAccount;
 
     /**
      * Creates new form AdminWorkAreaJPanel
      */
-    public AdminWorkAreaJPanel(JPanel userProcessContainer, UserAccount userAccount, Restaurant restaurant) {
+    public AdminWorkAreaJPanel(JPanel userProcessContainer, UserAccount userAccount, Restaurant restaurant, EcoSystem system) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.restaurant = restaurant;
+        this.system = system;
+        this.userAccount = userAccount;
         valueLabel.setText(this.restaurant.getName());
     }
 
@@ -96,7 +100,10 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnManageMenuActionPerformed
 
     private void btnManageOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrdersActionPerformed
-
+        ManageOrdersJPanel manageOrdersJPanel = new ManageOrdersJPanel(userProcessContainer, this.restaurant, this.system.getDeliveryManDirectory(), this.userAccount);
+        userProcessContainer.add("manageOrdersJPanel", manageOrdersJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageOrdersActionPerformed
 
 

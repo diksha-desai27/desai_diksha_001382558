@@ -12,6 +12,10 @@ import Business.Restaurant.Restaurant;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +31,6 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
      */
     JPanel userProcessContainer;
     Restaurant restaurant;
-    
     public ManageMenuJPanel(JPanel userProcessContainer, Restaurant restaurant) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -188,12 +191,16 @@ public class ManageMenuJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_backJButtonActionPerformed
-
+List<Map<String,Float>> iteams = new ArrayList<>();
     private void btnAddMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMenuActionPerformed
 
         String foodItem = foodItemTextField.getText();
         Float price = Float.parseFloat(priceTextField.getText());
         Menu menu = new Menu(foodItem, price);
+//        Map<String,Float> item = new HashMap<>();
+//        item.put(foodItem,price);
+//        iteams.add(item);
+//        menu.setItems(iteams);
         this.restaurant.getMenu().add(menu);
         JOptionPane.showMessageDialog(null, "Menu added successfully.");       
         this.populateTable();

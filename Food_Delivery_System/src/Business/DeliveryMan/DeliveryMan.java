@@ -5,6 +5,7 @@
  */
 package Business.DeliveryMan;
 
+import Business.Order.Order;
 import Business.Organization;
 import Business.Role.Role;
 import java.util.ArrayList;
@@ -13,15 +14,26 @@ import java.util.ArrayList;
  *
  * @author harold
  */
-public class DeliveryMan {
+public class DeliveryMan extends Organization{
     
-    String name;
-    String username;
+    private String name;
+    private String username;
+    private Order order;
 
     public DeliveryMan(String name, String username) {
+        super(name);
         this.name = name;
         this.username = username;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+    
 
     public String getUsername() {
         return username;
@@ -43,5 +55,10 @@ public class DeliveryMan {
     public String toString() {
         return this.getUsername();
     }    
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
